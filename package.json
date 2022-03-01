@@ -8,7 +8,7 @@
         "serverUrl": "https://autocorector.dit.upm.es/",
         "courseId": "2110",
         "assignmentId": "16976"
-    }
+    },
     "scripts": {
         "start": "node rest_server.js",
         "seed": "md-seed run",
