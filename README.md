@@ -50,7 +50,7 @@ Una vez dentro de la carpeta, se instalan las dependencias con:
 npm install
 ```
 
-Crear 4 carpetas en el escritorio del ordenador. En ellas se almacenen los datos de cada una de las instancias de mongo que se desplegarán. Para ello, puede abrir otra terminal o powershell distinta, navegue usando el comando "cd" hasta el escritorio y una vez alli, ejecute los siguientes comandos. [IMPORTANTE] La carpeta data_patients se debe crear fuera del directorio de la práctica.
+Crear 4 carpetas en su ordenador. En ellas se almacenen los datos de cada una de las instancias de mongo que se desplegarán. **IMPORTANTE** La carpeta data_patients se debe crear fuera del directorio de la práctica. Si se crean dentro de la carpeta nosql_practica5_bbdd, el autocorrector dará problemas a la hora de subir la nota a Moodle. Por ejemplo, puede crearlas en el escritorio de su ordenador (_C:\Users\usuarioX\Desktop\data_patients_). Para ello, puede abrir otra terminal o powershell distinta, navegue usando el comando "cd" hasta el escritorio y una vez alli, ejecute los siguientes comandos.
 
 
 ```
@@ -110,7 +110,7 @@ Si teneis Windows el comando se deberá ejecutar como ./mongo.exe como siempre h
 
 9. Verificar que los datos se han escrito tanto en el primario como en los secundarios y que además se respeta el delay en el servidor de mongo "localhost:27004”
 
-10. Sin detener la ejecución de las 4 instancias de mongo. Añadir un una quinta instancia de mongo al replicaset(localhost:27005). Esta Instancia debe estar configurado como arbiterOnly. Nuevamente cree un directorio especifico para esta instancia (Ej: data_patients/data5), arranque una nueva instancia con mongod en otro terminal y consulte las transparencias de clase para ver como incluir un arbitro en el replicaSet.
+10. Sin detener la ejecución de las 4 instancias de mongo. Añadir un una quinta instancia de mongo al replicaset(localhost:27005). Esta Instancia debe estar configurado como arbiterOnly. Nuevamente cree un directorio especifico para esta instancia (Ej: data_patients/data5), arranque una nueva instancia con mongod en otro terminal y consulte las transparencias de clase para ver como incluir un arbitro en el replicaSet. Este árbitro de incluye desde el servidor primario.
 
 ## 6. Prueba de la práctica 
 
