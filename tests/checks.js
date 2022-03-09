@@ -241,7 +241,7 @@ describe("BBDD Tests", function () {
             this.msg_err = "The slaveDelay time is not correct in node 4";
             this.msg_ok = "The slaveDelay number is correct in node 4!";
 			result = await conn.db.command({"replSetGetConfig":1 });
-			let delays = result.config.members.map(a => a.slaveDelay);
+			let delays = result.config.members.map(a => a.slaveDelay || a.secondaryDelaySecs);
 			expect(delays).to.include(60)
 		})
     });
