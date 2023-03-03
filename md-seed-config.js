@@ -1,6 +1,6 @@
 const mongoose =require ('mongoose');
 var Patients = require ('./seeders/patients.seeder')
-const mongoURL = process.env.MONGO_URL || 'mongodb://localhost:27001,localhost:27002,localhost:27003,localhost:27004/bio_bbdd?replicaSet=my-mongo-set';
+const mongoURL = process.env.MONGO_URL || 'mongodb://localhost:27006/bio_bbdd';
 
 /**
  * Seeders List

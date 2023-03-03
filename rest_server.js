@@ -6,16 +6,6 @@ const PatientController = require('./controllers/patient');
 
 const app = express();
 
-const mongoose = require('mongoose');
-(async () => {
-  try {
-    await mongoose.connect('mongodb://localhost/bio_bbdd',{ useNewUrlParser: true, useUnifiedTopology: true })
-    console.log('Connected to Mongo 1!')
-  } catch (err) {
-    console.log('Error connecting to Database: ' + err)
-  }
-})()
-
 app.use(methodOverride('_method'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

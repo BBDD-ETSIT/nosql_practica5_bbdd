@@ -9,9 +9,9 @@ const PatientSchema = Schema({
     city: String,
     profession: Array,
     medicalHistory: [{
-    	specialist: String,
-    	diagnosis: String,
-    	date: Date,
+        specialist: String,
+        diagnosis: String,
+        date: Date,
     }]
 });
 
