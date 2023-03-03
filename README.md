@@ -66,7 +66,7 @@ $ mkdir data_patients/config data_patients/shard1_1 data_patients/shard1_2 data_
 
 ## 5. Consejos para antes de empezar
 
-***PLAN DE CONTINGENCIA FRENTE A ERRORES:*** Se recomienda APUNTAR en un editor de textos todos los comandos que se ejecuten tanto en la terminal como en la shell de mongo. Para que en caso de que se realice una configuración de replicaset o sharding incorrecta, pueda facilmente parar todos los servidores y ejecutar de nuevo todos los comandos apuntados que se han realizado correctamente. Si se da el caso, se recomienda también BORRAR la carpeta data_patients y volver a recrear las carpetas como en el punto anterior.
+***PLAN DE CONTINGENCIA FRENTE A ERRORES:*** Se recomienda ***APUNTAR*** en un editor de textos todos los ***comandos*** que se ejecuten tanto en la terminal como en la shell de mongo. Para que en caso de que se realice una configuración de replicaset o sharding incorrecta, pueda facilmente parar todos los servidores y ejecutar de nuevo todos los comandos apuntados que se han realizado correctamente. Si se da el caso, se recomienda también ***BORRAR la carpeta data_patients*** y volver a recrear las carpetas como en el punto anterior.
 
 ***TERMINATOR:*** En el laboratorio existe un programa llamado terminator. Este programa es como una terminal del ordenador pero con algunas funcionalidades extra. En este caso, se recomienda usar terminator para dividir la pantalla de la terminal en varias mini-ventanas (pinchando con el botón secundario del ratón sobre la ventana de terminator podremos ver la opción de dividir). De esta manera le resultará más fácil gestionar todas las intancias de mongo que se deben ejecutar. Si lo desea, también puede ponerle un nombre a cada una de las mini-ventanas. El resultado de dividir las pantallas debe ser similar al siguiente:
 
@@ -146,12 +146,6 @@ Se deben usar los mismos puertos que los mostrados en la figura. Si esta realiza
     mongo --host localhost:27001
     ```    
 
-    Conexión a la shell del router Mongos:
-    
-    ```
-    mongo --host localhost:27001
-    ```
-
     Añadir los shards:
 
     ```
@@ -198,22 +192,22 @@ Se deben usar los mismos puertos que los mostrados en la figura. Si esta realiza
 
 8. Abrá un navegador y navegar a "http://localhost:8001". Inserte, por medio de la aplicación web de gestión de pacientes, un nuevo paciente cuyo DNI sea el token del moodle del alumno. Realice una captura de la interfaz con la lista de pacientes en la que salga el nuevo paciente creado. Esta es una de las caputuras exigidas y que debe guardar dentro del directorio "miscapturas".
 
-9. Verificar que los datos se han escrito solamente en uno de los shards. En este punto, ejecute el comando db.patients.getShardDistribution() dentro de mongos y haga una busqueda a través de la shell de mongos del paciente que acaba de crear (db.patients.findOne....). Haga una captura en la que se observer la salida de los dos comandos y guardele en miscapturas.    
+9. Verificar que los datos se han escrito solamente en uno de los shards. En este punto, ejecute el comando db.patients.getShardDistribution() dentro de mongos y haga una busqueda a través de la shell de mongos del paciente que acaba de crear (db.patients.findOne....). Haga una captura en la que se observe la salida de los dos comandos y guardela en miscapturas. 
 
 
 10. Sin detener la ejecución de las instancias de mongo. Añadir un una nueva instancia de mongo (localhost:27007) al primer shard (shard_servers_1). Esta Instancia debe estar configurado como arbiterOnly. Recuerde que en pasos anteriores ya habiamos creado la carpeta necesaria para esta nueva instancia (data_patients/shard1_3). Arranque la una nueva instancia con mongod en otra de las ventanas de terminator:
 
-```
-mongod  --shardsvr --replSet shard_servers_1 --port 27007 --dbpath data_patients/shard1_3 --oplogSize 50
-```
+    ```
+    mongod  --shardsvr --replSet shard_servers_1 --port 27007 --dbpath data_patients/shard1_3 --oplogSize 50
+    ```
 
-Nos conectamos al servidor primario de mongo:
+    Nos conectamos al servidor primario de mongo:
 
-```
-mongo --host localhost:27002
-```
+    ```
+    mongo --host localhost:27002
+    ```
 
-Consulte las transparencias de clase para ver como incluir un arbitro en el replicaSet.
+    Consulte las transparencias de clase para ver como incluir un arbitro en el replicaSet.
 
 ## 7. Ejemplos de capturas
 
