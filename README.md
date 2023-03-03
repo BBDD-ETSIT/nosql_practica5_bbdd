@@ -112,8 +112,14 @@ Se deben usar los mismos puertos que los mostrados en la figura. Si esta realiza
     En otras 4 mini-ventanas de terminator, ejecutamos cada una de las siguientes órdernes:
     ```
     mongod  --shardsvr --replSet shard_servers_1 --port 27002 --dbpath data_patients/shard1_1 --oplogSize 50
+    ```
+    ```
     mongod  --shardsvr --replSet shard_servers_1 --port 27003 --dbpath data_patients/shard1_2 --oplogSize 50
+    ```
+    ```
     mongod  --shardsvr --replSet shard_servers_2 --port 27004 --dbpath data_patients/shard2_1 --oplogSize 50
+    ```
+    ```
     mongod  --shardsvr --replSet shard_servers_2 --port 27005 --dbpath data_patients/shard2_2 --oplogSize 50
     ```
 
