@@ -20,12 +20,14 @@ Para realizar la práctica el alumno deberá tener instalado en su ordenador:
 
 ## 3. Descripción de la práctica
 
-En esta práctica el alumno aprenderá por un lado a configurar y a operar con un ReplicaSet de MongoDB para ofrecer a un servicio Web alta disponibilidad en términos de persistencia. Y por otro lado aprenderá como configurar un particionamiento para mejorar la eficiencia de almacenamiento y de busqueda de información. El objetivo final de la práctica es ser capaz de desplegar de manera sencilla el siguiente escenario usando múltiples instancias de mongoDB que se ejecutarán en el mismo ordenador. A continuación se explica la función de cada módulo de la figura.
+En esta práctica el alumno aprenderá por un lado a configurar y a operar con un ReplicaSet de MongoDB para ofrecer a un servicio Web alta disponibilidad en términos de persistencia. Y por otro lado aprenderá como configurar un particionamiento para mejorar la eficiencia de almacenamiento y de busqueda de información. El objetivo final de la práctica es ser capaz de desplegar de manera sencilla el siguiente escenario usando múltiples instancias de mongoDB que se ejecutarán en el mismo ordenador en diferentes puertos (esto en un caso real serían diferentes máquinas o nodos en diferentes partes del mundo). A continuación se explica la función de cada módulo de la figura.
+
+Un detalle a comentar es que la figura indica los diferentes procesos que vamos a desplegar (que serían nodos en un despliegue por el mundo) y en cada uno indica su ip y puerto. La ip en todos los casos es localhost (nuestra máquina local, localhost es equivalente a 127.0.0.1) y el puerto va cambiando, durante las primeras prácticas usabamos el puerto por defecto que es 27017 porque no lo indicábamos en el comando con --port pero ahora lo iremos cambiando para cada instancia que lancemos, asi un nodo escuchará en en puerto 27001 y otro en 27003 etc.
 
 
 ![Architecture](https://github.com/BBDD-ETSIT/nosql_practica5_bbdd/blob/main/img/arquitectura.png?raw=true)
 
-- App Gestión de Pacientes: se trata del servidor Web desarrollado en la práctica relativa a ODMs correspondiente de la asignatura. El servidor incluido en este repositorio escucha peticiones en http://localhost:8001 y se conectará a través de un router de Mongodb, Mongo (en localhost:27006), con dos clúster que contienen información particionada y replicada de los pacientes. Para saber a que clúser se debe dirigir el router, contaremos con el localizador de MongoDB llamado Config Server.
+- App Gestión de Pacientes: se trata del servidor Web que se desarrolla en la práctica relativa a ODMs correspondiente de la asignatura. El servidor incluido en este repositorio escucha peticiones en la URL http://localhost:8001 y se conectará a través de un router de Mongodb, mongos (que tendremos escuchando en localhost:27006), con dos clúster que contienen información particionada y replicada de los pacientes. Para saber a que clúser se debe dirigir el router, contaremos con el localizador de MongoDB llamado Config Server.
 
 - config_server: se trata de un clúster replicaSet conformado por una única instancia de mongo desplegada en localhost:27001.
 
@@ -74,16 +76,16 @@ $ mkdir data_patients/config data_patients/shard1_1 data_patients/shard1_2 data_
 
 ***TERMINAL Y SHELL DE MONGO:*** Algunos de los comandos que se ejecutan en esta práctica se ejecutan en la terminal mientras que otros se ejecutan en la shell de mongo. Por ejemplo la creación de carpetas, el autocorector o los comandos que empiezan por "npm" se ejecutan en la terminal. Mientras que otros comandos como rs.initiate... o db.patients... se deben ejecutar en la shell de mongo (cuando haya accedido a la shell, podrá observar en el terminal que antes del puntero de escribir aparecerá símbolo ">"). Otra consideración importante es saber la diferencia entre mongo (o mongosh en las últimas versiones de mongo), mongod y mongos. 
 - Con "mongod" podemos arrancar un servidor de MongoDb, es decir, es la base de datos en si desplegada. 
-- Con "mongo" podemos acceder a la shell de servidores de Mongodb creados con el anterior comando para realizar acciones sobre la BD.
+- Con "mongo" podemos acceder a la shell de servidores de Mongodb creados con el anterior comando para realizar acciones sobre la BD. (es el equivalente a mongosh en la versión 5 y 6 de mongodb).
 - Con "mongos" podemos arrancar un servidor de MongoDb en modo "router". Es decir no almacena información pero es capaz de redirigir peticiones a otros servidores de mongo que si que la tienen. Cuando haya accedido a la shell de un servidor arrancado de esta manera, podrá observar en el terminal que antes del puntero de escribir aparecerá símbolo "mongos>". Es dentro de esta shell donde se ejecutarán TODOS los comandos relativos a SHARDING.
 
 ***CAPTURAS:*** Dentro del directorio de la praćtica cree la carpeta "miscapturas" donde guardará las dos capturas exigidas para entregar la práctica.
 
 ## 6. Tareas a realizar
 
-Antes comentar que en una situación real, cada instancia de mongo que ejecutaremos debe estar en un servidor separado, pero para nuestras pruebas vamos a hacer que las diferentes instancias de mongo se arranquen en la misma máquina pero en distintos puertos. Por otro lado, los comando que a continuación se exponen se ejecutan en Ubuntu. Si teneis otro Sistema Operativo, como Windows, para ejecutar mongod o mongos debeis abrir una PowerShell e ir al directorio donde teneis almacenado mongod.exe y mongos.exe. Además, deben indicar la ruta absoluta de donde se encuentra la carpeta data_patients, por ejemplo si el repositorio ha sido clonado en el escritorio la instrucción a ejecutar sería similar a esta: PS C:\Archivos de programa\MongoDB\Server\4.2\bin>.\mongod --port 27001 —dbpath C:\Users\usuarioX\Desktop\algunotrodirectorio\data_patients\shard1_1....
+Antes comentar que en una situación real, cada instancia de mongo que ejecutaremos debe estar en un servidor separado, pero para nuestras pruebas vamos a hacer que las diferentes instancias de mongo se arranquen en la misma máquina pero en distintos puertos. 
 
-Se deben usar los mismos puertos que los mostrados en la figura. Si esta realizando la práctica desplegando instancias de Docker con Mongo asegurese de que ha realizado bien el mapeo de puertos entre el contenedor y el host. Por otro lado, se debe arrancar Mongo sin ningún tipo de autenticación ya que el autocorector se conecta a los servidores para realizar los tests sin usar ningún tipo de usuario/contraseña.
+La práctica se realizará por completo en el laboratorio del DIT, pero si alguien quiere probarla en su ordenador personal avisar que los comando que a continuación se exponen se ejecutan en Ubuntu. Si teneis otro Sistema Operativo, como Windows, para ejecutar mongod o mongos debeis abrir una PowerShell e ir al directorio donde teneis almacenado mongod.exe y mongos.exe. Además, deben indicar la ruta absoluta de donde se encuentra la carpeta data_patients, por ejemplo si el repositorio ha sido clonado en el escritorio la instrucción a ejecutar sería similar a esta: PS C:\Archivos de programa\MongoDB\Server\4.2\bin>.\mongod --port 27001 —dbpath C:\Users\usuarioX\Desktop\algunotrodirectorio\data_patients\shard1_1.... Se deben usar los mismos puertos que los mostrados en la figura. Si esta realizando la práctica desplegando instancias de Docker con Mongo asegurese de que ha realizado bien el mapeo de puertos entre el contenedor y el host. Por otro lado, se debe arrancar Mongo sin ningún tipo de autenticación ya que el autocorector se conecta a los servidores para realizar los tests sin usar ningún tipo de usuario/contraseña.
 
 
 1. En primer lugar arrancaremos y configuraremos el config server que contendrá la información acerca de a que partición dirigirse para obtener determinados datos de un paciente. Para ello, necesitamos:
@@ -97,7 +99,7 @@ Se deben usar los mismos puertos que los mostrados en la figura. Si esta realiza
     mongod --configsvr --replSet config_servers --port 27001 --dbpath data_patients/config
     ```
 
-    Una vez arrancado, desde otro terminal, nos conectamos al servidor que va a actuar como primario. En las últimas versiones de Mongodb para conectarnos a la shell usabamos el comando "mongosh". Pero dado que en el laboratorio existe la versión 3 de Mongo,el comando es "mongo":
+    Una vez arrancado, desde otro terminal, nos conectamos al servidor que va a actuar como primario. En las últimas versiones de Mongodb para conectarnos a la shell usabamos el comando "mongosh". Pero dado que en el laboratorio existe la versión 3 de MongoDB ,el comando es "mongo":
     ```
     mongo --host localhost:27001
     ```
