@@ -145,7 +145,7 @@ La práctica se realizará por completo en el laboratorio del DIT, pero si algui
     Conexión a la shell del router Mongos:
 
     ```
-    mongo --host localhost:27001
+    mongo --host localhost:27006
     ```    
 
     Añadir los shards:
