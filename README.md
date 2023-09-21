@@ -99,9 +99,9 @@ La práctica se realizará por completo en el laboratorio del DIT, pero si algui
     mongod --configsvr --replSet config_servers --port 27001 --dbpath data_patients/config
     ```
 
-    Una vez arrancado, desde otro terminal, nos conectamos al servidor que va a actuar como primario. En las últimas versiones de Mongodb para conectarnos a la shell usabamos el comando "mongosh". Pero dado que en el laboratorio existe la versión 3 de MongoDB ,el comando es "mongo":
+    Una vez arrancado, desde otro terminal, nos conectamos al servidor que va a actuar como primario. En las últimas versiones de Mongodb para conectarnos a la shell usabamos el comando "mongosh". Pero dado que en el laboratorio existe la versión 3 de MongoDB ,el comando es "mongosh":
     ```
-    mongo --host localhost:27001
+    mongosh --host localhost:27001
     ```
     Inicialice el replicaSet del config server como hemos visto en las trasparencias de clase, teniendo en cuenta que solo hay una instancia de mongo dentro del clúster y que debemos especificar que se trata de un config server.
 
@@ -145,7 +145,7 @@ La práctica se realizará por completo en el laboratorio del DIT, pero si algui
     Conexión a la shell del router Mongos:
 
     ```
-    mongo --host localhost:27006
+    mongosh --host localhost:27006
     ```    
 
     Añadir los shards:
@@ -203,13 +203,29 @@ La práctica se realizará por completo en el laboratorio del DIT, pero si algui
     mongod  --shardsvr --replSet shard_servers_1 --port 27007 --dbpath data_patients/shard1_3 --oplogSize 50
     ```
 
-    Nos conectamos al servidor primario de mongo:
+    Nos conectamos previamente al router mongos para poder habilitar la edición de cambios en los clúster de sharding. Si no hacemos los siguientes dos pasos, mongo no nos permitirá añadir un árbitro al primer replicaSet creado.
 
     ```
-    mongo --host localhost:27002
+    mongosh --host localhost:27006
+    ```
+    Y dentro del router mongos ejecutamos:
+    
+    ```
+    db.adminCommand(
+        {
+            setDefaultRWConcern : 1,
+            defaultWriteConcern: { w: 1 },
+        }
+    )
+    ```
+    
+    Ahora nos conectamos al servidor primario del primer replica set creado:
+
+    ```
+    mongosh --host localhost:27002
     ```
 
-    Consulte las transparencias de clase para ver como incluir un arbitro en el replicaSet.
+    Y consultando las transparencias de clase, incluya un arbitro en este replicaSet.
 
 ## 7. Ejemplos de capturas
 
