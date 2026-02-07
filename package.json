@@ -15,11 +15,10 @@
         "start": "node rest_server.js",
         "seed": "md-seed run",
         "test": "autocorector",
-        "upload": "autocorector -u",
-        "test:old": "nodemon --exec 'mocha -R min'"
+        "upload": "autocorector -u"
     },
     "dependencies": {
-        "autocorector": "^3.1.4",
+        "autocorector": "^4.1.0",
         "body-parser": "~1.12.4",
         "chai": "^4.2.0",
         "ejs": "^3.0.1",
